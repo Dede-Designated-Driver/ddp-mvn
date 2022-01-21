@@ -10,7 +10,8 @@
     <version>0.0.1</version>
 
     <description>
-      This project is a library encapsulating the Dede Protocol (ddp) as Maven plugin. Clients can use the ddp to interact with the Dede back end.
+        This project is a library encapsulating the Dede Protocol (ddp) as Maven
+        plugin. Clients can use the ddp to interact with the Dede back end.
     </description>
 
     <url>https://dedriver.org</url>
@@ -136,6 +137,24 @@
             <artifactId>assertj-core</artifactId>
             <version>3.21.0</version>
             <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-io -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20211205</version>
         </dependency>
         <!--required for Logger class-->
         <dependency>
