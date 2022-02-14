@@ -7,7 +7,7 @@
 
     <groupId>org.dedriver</groupId>
     <artifactId>ddp</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
 
     <description>
         This project is a library encapsulating the Dede Protocol (ddp) as Maven

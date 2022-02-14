@@ -1,18 +1,27 @@
 package org.dedriver;
 
-import org.dedriver.model.Adr;
-import org.dedriver.model.Msg;
+import org.dedriver.model.Address;
+import org.dedriver.model.MsgVehicle;
+import org.json.JSONObject;
 
 /**
- * Transmits a {@link org.dedriver.model.Msg}.
+ * Transmits a {@link MsgVehicle}.
  */
 public interface Tx {
 
     /**
-     * Transmits a {@link org.dedriver.model.Msg} using Dede Protocol (ddp)
+     * Transmits a {@link MsgVehicle} using Dede Protocol (ddp)
      *
-     * @param msg the {@link Msg} to be transmitted
-     * @param adr the {@link Adr} to be used as destination of the {@link Msg}
+     * @param msg     the {@link MsgVehicle} to be transmitted
+     * @param address the {@link Address} to be used as destination
      */
-    void send(final Msg msg, final Adr adr);
+    void send(MsgVehicle msg, Address address);
+
+    /**
+     * Transmits a {@link JSONObject} using Dede Protocol (ddp)
+     *
+     * @param msg     the {@link JSONObject} to be transmitted
+     * @param address the {@link Address} to be used as destination
+     */
+    void send(JSONObject msg, Address address);
 }

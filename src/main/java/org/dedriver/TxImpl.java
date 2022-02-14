@@ -19,8 +19,8 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
-import org.dedriver.model.Adr;
-import org.dedriver.model.Msg;
+import org.dedriver.model.Address;
+import org.dedriver.model.MsgVehicle;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -42,8 +42,7 @@ class TxImpl implements Tx {
     public TxImpl() {
     }
 
-    @Override
-    public void send(final Msg msg, final Adr adr) {
+    private static void sendToAdr(JSONObject msg, Address adr) {
         KeyStore trustStore =
                 null;
         try {
@@ -139,27 +138,8 @@ class TxImpl implements Tx {
             post.setHeaders(headers);
         }
 
-        //create payload
-        //create request data in JSON format
-        //create JSON object
-        JSONObject payload = new JSONObject();
-        try {
-            payload.put("uuid", msg.getId());
-            payload.put("latitude", msg.getLat());
-            payload.put("longitude", msg.getLon());
-            payload.put("timestamp", msg.getTs());
-            payload.put("alias", msg.getAlias());
-            payload.put("vehicle", msg.getType());
-        } catch (JSONException e) {
-            LOG.error("JSON error detected, message: "
-                    + e.getMessage() + ", trace: "
-                    + Arrays.toString(e.getStackTrace()));
-            e.printStackTrace();
-        }
-
         //set the payload
-        HttpEntity entity;
-        entity = new ByteArrayEntity(payload.toString().getBytes(StandardCharsets.UTF_8));
+        HttpEntity entity = new ByteArrayEntity(msg.toString().getBytes(StandardCharsets.UTF_8));
         if (post != null) {
             post.setEntity(entity);
         }
@@ -221,5 +201,35 @@ class TxImpl implements Tx {
             statusPhrase = response.getStatusLine().getReasonPhrase();
             LOG.debug("statusPhrase: " + statusPhrase);
         }
+    }
+
+    @Override
+    public void send(final MsgVehicle msg, final Address address) {
+        //create payload
+        //create request data in JSON format
+        //create JSON object
+        JSONObject payload = new JSONObject();
+        try {
+            payload.put("uuid", msg.getId());
+            payload.put("latitude", msg.getLat());
+            payload.put("longitude", msg.getLon());
+            payload.put("timestamp", msg.getTs());
+            payload.put("alias", msg.getAlias());
+            payload.put("vehicle", msg.getType());
+        } catch (JSONException e) {
+            LOG.error("JSON error detected, message: "
+                    + e.getMessage() + ", trace: "
+                    + Arrays.toString(e.getStackTrace()));
+            e.printStackTrace();
+        }
+
+        //send to address
+        sendToAdr(payload, address);
+    }
+
+    @Override
+    public void send(JSONObject msg, Address address) {
+        //send to address
+        sendToAdr(msg, address);
     }
 }

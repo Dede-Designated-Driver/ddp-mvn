@@ -1,11 +1,11 @@
 package org.dedriver.model;
 
-public class Adr {
+public class Address {
     private final String port;
     private final String route;
     private final String url;
 
-    public Adr(String port, String route, String url) {
+    public Address(String port, String route, String url) {
         this.port = port;
         this.route = route;
         this.url = url;
@@ -13,7 +13,7 @@ public class Adr {
 
     @Override
     public String toString() {
-        return "Adr{" +
+        return "Address{" +
                 "port='" + port + '\'' +
                 ", route='" + route + '\'' +
                 ", url='" + url + '\'' +
