@@ -1,21 +1,21 @@
 package org.dedriver;
 
 import org.dedriver.model.Address;
-import org.dedriver.model.MsgVehicle;
+import org.dedriver.model.MsgDedeObu;
 import org.json.JSONObject;
 
 /**
- * Transmits a {@link MsgVehicle}.
+ * Transmits a {@link MsgDedeObu}.
  */
 public interface Tx {
 
     /**
-     * Transmits a {@link MsgVehicle} using Dede Protocol (ddp)
+     * Transmits a {@link MsgDedeObu} using Dede Protocol (ddp)
      *
-     * @param msg     the {@link MsgVehicle} to be transmitted
+     * @param msg     the {@link MsgDedeObu} to be transmitted
      * @param address the {@link Address} to be used as destination
      */
-    void send(MsgVehicle msg, Address address);
+    void send(MsgDedeObu msg, Address address);
 
     /**
      * Transmits a {@link JSONObject} using Dede Protocol (ddp)

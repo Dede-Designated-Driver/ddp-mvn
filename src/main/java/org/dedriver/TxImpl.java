@@ -20,7 +20,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.dedriver.model.Address;
-import org.dedriver.model.MsgVehicle;
+import org.dedriver.model.MsgDedeObu;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -115,7 +115,6 @@ class TxImpl implements Tx {
         HttpClient client = new DefaultHttpClient(ccm, params);
 
         String address = adr.getUrl() + ":" + adr.getPort() + adr.getRoute();
-        LOG.debug("address: " + address);
 
         //create a HTTP POST request
         //use web service endpoint or web site page as url
@@ -168,16 +167,6 @@ class TxImpl implements Tx {
             }
         }
 
-        //print status line
-        if (response != null) {
-            LOG.debug("status line: " + response.getStatusLine());
-        }
-        if (sc != null) {
-            while (sc.hasNext()) {
-                LOG.debug("status line: " + sc.nextLine());
-            }
-        }
-
         //close interaction
         try {
             if (response != null) {
@@ -189,22 +178,10 @@ class TxImpl implements Tx {
                     + Arrays.toString(e.getStackTrace()));
             e.printStackTrace();
         }
-
-        //verify response
-        int responseCode = 0;
-        if (response != null) {
-            responseCode = response.getStatusLine().getStatusCode();
-            LOG.debug("responseCode: " + responseCode);
-        }
-        String statusPhrase = null;
-        if (response != null) {
-            statusPhrase = response.getStatusLine().getReasonPhrase();
-            LOG.debug("statusPhrase: " + statusPhrase);
-        }
     }
 
     @Override
-    public void send(final MsgVehicle msg, final Address address) {
+    public void send(final MsgDedeObu msg, final Address address) {
         //create payload
         //create request data in JSON format
         //create JSON object

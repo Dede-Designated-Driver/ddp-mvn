@@ -7,9 +7,9 @@ import java.util.Arrays;
 
 import static org.dedriver.utils.StringUtils.isNumeric;
 
-public class MsgVehicle {
+public class MsgDedeObu {
 
-    private final static Logger LOG = LoggerFactory.getLogger(MsgVehicle.class);
+    private final static Logger LOG = LoggerFactory.getLogger(MsgDedeObu.class);
 
     private final static int ID_MIN = 0;
     private final static int LAT_MIN = -90;
@@ -28,7 +28,7 @@ public class MsgVehicle {
     private final String alias;
     private final String type;
 
-    public MsgVehicle(String id, String lat, String lon, String ts, String alias, String type) {
+    public MsgDedeObu(String id, String lat, String lon, String ts, String alias, String type) {
 
         //validate id
         if (!isValidId(id)) {
@@ -152,7 +152,7 @@ public class MsgVehicle {
 
     @Override
     public String toString() {
-        return "MsgVehicle{" +
+        return "MsgDedeObu{" +
                 "id='" + id + '\'' +
                 ", lat='" + lat + '\'' +
                 ", lon='" + lon + '\'' +
