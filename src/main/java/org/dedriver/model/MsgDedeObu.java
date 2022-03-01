@@ -11,14 +11,14 @@ public class MsgDedeObu {
 
     private final static Logger LOG = LoggerFactory.getLogger(MsgDedeObu.class);
 
-    private final static int ID_MIN = 0;
-    private final static int LAT_MIN = -90;
-    private final static int LAT_MAX = 90;
-    private final static int LAT_INVALID = 91;
-    private final static int LON_MIN = -180;
-    private final static int LON_MAX = 180;
-    private final static int LON_INVALID = -181;
-    private final static int TS_MIN = 0;
+    public final static int ID_MIN = 0;
+    public final static int LAT_MIN = -90;
+    public final static int LAT_MAX = 90;
+    public final static int LAT_INVALID = 91;
+    public final static int LON_MIN = -180;
+    public final static int LON_MAX = 180;
+    public final static int LON_INVALID = -181;
+    public final static int TS_MIN = 0;
     private final static int TS_INVALID = -1;
 
     private final String id;
@@ -32,29 +32,25 @@ public class MsgDedeObu {
 
         //validate id
         if (!isValidId(id)) {
-            throw new IllegalArgumentException("id length must be greater than "
-                    + ID_MIN);
+            throw new IllegalArgumentException("id length must be greater than " + ID_MIN);
         }
         this.id = id;
 
         //validate lat
         if (!isValidLat(lat)) {
-            throw new IllegalArgumentException("lat value must be between "
-                    + LAT_MIN + " and " + LAT_MAX);
+            throw new IllegalArgumentException("lat value must be between " + LAT_MIN + " and " + LAT_MAX);
         }
         this.lat = lat;
 
         //validate lon
         if (!isValidLon(lon)) {
-            throw new IllegalArgumentException("lon value must be between "
-                    + LON_MIN + " and " + LON_MAX);
+            throw new IllegalArgumentException("lon value must be between " + LON_MIN + " and " + LON_MAX);
         }
         this.lon = lon;
 
         //validate ts
         if (!isValidTs(ts)) {
-            throw new IllegalArgumentException("ts value must be greater than "
-                    + TS_MIN);
+            throw new IllegalArgumentException("ts value must be greater than " + TS_MIN);
         }
         this.ts = ts;
 
@@ -152,14 +148,7 @@ public class MsgDedeObu {
 
     @Override
     public String toString() {
-        return "MsgDedeObu{" +
-                "id='" + id + '\'' +
-                ", lat='" + lat + '\'' +
-                ", lon='" + lon + '\'' +
-                ", ts='" + ts + '\'' +
-                ", alias='" + alias + '\'' +
-                ", type='" + type + '\'' +
-                '}';
+        return "MsgDedeObu{" + "id='" + id + '\'' + ", lat='" + lat + '\'' + ", lon='" + lon + '\'' + ", ts='" + ts + '\'' + ", alias='" + alias + '\'' + ", type='" + type + '\'' + '}';
     }
 
     public String getId() {
