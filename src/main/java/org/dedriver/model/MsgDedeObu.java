@@ -9,8 +9,6 @@ import static org.dedriver.utils.StringUtils.isNumeric;
 
 public class MsgDedeObu {
 
-    private final static Logger LOG = LoggerFactory.getLogger(MsgDedeObu.class);
-
     public final static int ID_MIN = 0;
     public final static int LAT_MIN = -90;
     public final static int LAT_MAX = 90;
@@ -19,6 +17,7 @@ public class MsgDedeObu {
     public final static int LON_MAX = 180;
     public final static int LON_INVALID = -181;
     public final static int TS_MIN = 0;
+    private final static Logger LOG = LoggerFactory.getLogger(MsgDedeObu.class);
     private final static int TS_INVALID = -1;
 
     private final String id;
@@ -70,7 +69,7 @@ public class MsgDedeObu {
                 return true;
             }
         }
-        LOG.error("id: " + id + " is invalid");
+        LOG.info("id: " + id + " is invalid");
         return false;
     }
 
@@ -88,13 +87,14 @@ public class MsgDedeObu {
             try {
                 lonFloat = Float.parseFloat(lon);
             } catch (NumberFormatException e) {
-                LOG.error("parsing failed, message: " + e.getMessage() + ", trace: " + Arrays.toString(e.getStackTrace()));
+                LOG.info("parsing failed, message: " + e.getMessage() + ", trace: " + Arrays.toString(e.getStackTrace()));
+                return false;
             }
         }
         if (lonFloat >= LON_MIN && lonFloat <= LON_MAX) {
             return true;
         }
-        LOG.error("lon: " + lon + " is invalid");
+        LOG.info("lon: " + lon + " is invalid");
         return false;
     }
 
@@ -112,13 +112,14 @@ public class MsgDedeObu {
             try {
                 latFloat = Float.parseFloat(lat);
             } catch (NumberFormatException e) {
-                LOG.error("parsing failed, message: " + e.getMessage() + ", trace: " + Arrays.toString(e.getStackTrace()));
+                LOG.info("parsing failed, message: " + e.getMessage() + ", trace: " + Arrays.toString(e.getStackTrace()));
+                return false;
             }
         }
         if (latFloat >= LAT_MIN && latFloat <= LAT_MAX) {
             return true;
         }
-        LOG.error("lat: " + lat + " is invalid");
+        LOG.info("lat: " + lat + " is invalid");
         return false;
     }
 
@@ -136,13 +137,14 @@ public class MsgDedeObu {
             try {
                 tsLong = Long.parseLong(ts);
             } catch (NumberFormatException e) {
-                LOG.error("parsing failed, message: " + e.getMessage() + ", trace: " + Arrays.toString(e.getStackTrace()));
+                LOG.info("parsing failed, message: " + e.getMessage() + ", trace: " + Arrays.toString(e.getStackTrace()));
+                return false;
             }
         }
         if (tsLong >= TS_MIN) {
             return true;
         }
-        LOG.error("ts: " + ts + " is invalid");
+        LOG.info("ts: " + ts + " is invalid");
         return false;
     }
 
