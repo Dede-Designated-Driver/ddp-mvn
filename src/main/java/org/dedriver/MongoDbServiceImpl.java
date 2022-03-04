@@ -33,7 +33,6 @@ class MongoDbServiceImpl implements MongoDbService {
     @Override
     public void insertMsgIvuLct(Entity entity) {
 
-        //TODO LOG.debug("" + entity);
         //create document
         BasicDBObject dbObject = new BasicDBObject();
         dbObject.put("date", entity.getDate());
@@ -67,7 +66,6 @@ class MongoDbServiceImpl implements MongoDbService {
         dbObject.put("loadDegree", entity.getCc().getTelegram().getLocationMessage().getTrip().getLoadDegree());
         dbObject.put("destinationNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getDestinationNo());
         dbObject.put("tripType", entity.getCc().getTelegram().getLocationMessage().getTrip().getTripType());
-        //TODO LOG.debug("dbObject: " + dbObject);
 
         //insert document into collection
         if (dbAccessIvuLct.getCollection() != null) {
@@ -84,7 +82,6 @@ class MongoDbServiceImpl implements MongoDbService {
         Document document = (Document) dbAccess.getCollection().find(eq(key, value)).first();
 
         if (document != null) {
-            //TODO LOG.debug("db.c.doc has value: " + value);
 
             //update document
             BasicDBObject query = new BasicDBObject();
@@ -95,7 +92,6 @@ class MongoDbServiceImpl implements MongoDbService {
 
             dbAccess.getCollection().updateOne(query, updateObject);
         } else {
-            //TODO LOG.debug("db.c.dbObject has NOT value: " + value);
 
             //create and insert new document
             Document docNew = new Document(dbObject);
@@ -119,7 +115,6 @@ class MongoDbServiceImpl implements MongoDbService {
         //build Epoch time
         long epoch = date.getTime();
         String ts = Long.toString(epoch);
-        //TODO LOG.debug("ts: " + ts);
         return ts;
     }
 
@@ -134,7 +129,6 @@ class MongoDbServiceImpl implements MongoDbService {
         if (coordinate.length() > 7) {
             coordinateFormed = new StringBuilder(coordinate).insert(coordinate.length() - 7, ".").toString();
         }
-        //TODO LOG.debug("coordinateFormed: " + coordinateFormed);
         return coordinateFormed;
     }
 
@@ -145,7 +139,7 @@ class MongoDbServiceImpl implements MongoDbService {
         //validate id
         String id = entity.getCc().getHeader().getSender().getId();
         if (!isValidId(id)) {
-            LOG.error("id length must be greater than " + ID_MIN);
+            LOG.info("id length must be greater than " + ID_MIN);
             return;
         }
 
@@ -153,24 +147,23 @@ class MongoDbServiceImpl implements MongoDbService {
         //validate lat
         String lat = formatCoordinate(entity.getCc().getTelegram().getLocationMessage().getPosition().getLatitude());
         if (!isValidLat(lat)) {
-            LOG.error("lat value must be between " + LAT_MIN + " and " + LAT_MAX);
+            LOG.info("lat value must be between " + LAT_MIN + " and " + LAT_MAX);
             return;
         }
         //validate lon
         String lon = formatCoordinate(entity.getCc().getTelegram().getLocationMessage().getPosition().getLongitude());
         if (!isValidLon(lon)) {
-            LOG.error("lon value must be between " + LON_MIN + " and " + LON_MAX);
+            LOG.info("lon value must be between " + LON_MIN + " and " + LON_MAX);
             return;
         }
 
         //validate ts
         String ts = getTs(entity);
         if (!isValidTs(ts)) {
-            LOG.error("ts value must be greater than " + TS_MIN);
+            LOG.info("ts value must be greater than " + TS_MIN);
             return;
         }
 
-        //TODO LOG.debug("" + entity);
         //create document
         BasicDBObject dbObject = new BasicDBObject();
         dbObject.put("uuid", id);
@@ -179,7 +172,6 @@ class MongoDbServiceImpl implements MongoDbService {
         dbObject.put("ts", ts);
         dbObject.put("alias", "alias");
         dbObject.put("vehicle", "0");
-        //TODO LOG.debug("dbObject: " + dbObject);
 
         //insert document into collection
         if (dbAccessDedeObu.getCollection() != null) {
