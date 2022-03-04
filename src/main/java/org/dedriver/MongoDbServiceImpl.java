@@ -30,51 +30,6 @@ class MongoDbServiceImpl implements MongoDbService {
     public MongoDbServiceImpl() {
     }
 
-    @Override
-    public void insertMsgIvuLct(Entity entity) {
-
-        //create document
-        BasicDBObject dbObject = new BasicDBObject();
-        dbObject.put("date", entity.getDate());
-        dbObject.put("time", entity.getTime());
-        dbObject.put("logLevel", entity.getLogLevel());
-        dbObject.put("addressPartA", entity.getAddressPartA());
-        dbObject.put("addressPartB", entity.getAddressPartB());
-        dbObject.put("peer", entity.getPeer());
-        dbObject.put("addressNext", entity.getAddressNext());
-        dbObject.put("direction", entity.getDirection());
-        dbObject.put("senderType", entity.getCc().getHeader().getSender().getType());
-        dbObject.put("senderId", entity.getCc().getHeader().getSender().getId());
-        dbObject.put("receiverType", entity.getCc().getHeader().getReceiver().getType());
-        dbObject.put("receiverId", entity.getCc().getHeader().getReceiver().getId());
-        dbObject.put("teleType", entity.getCc().getTelegram().getTeleHeader().getTeleType());
-        dbObject.put("teleVersion", entity.getCc().getTelegram().getTeleHeader().getTeleVersion());
-        dbObject.put("teleId", entity.getCc().getTelegram().getTeleHeader().getTeleId());
-        dbObject.put("netPoint", entity.getCc().getTelegram().getLocationMessage().getPosition().getNetPoint());
-        dbObject.put("relPosition", entity.getCc().getTelegram().getLocationMessage().getPosition().getRelPosition());
-        dbObject.put("longitude", entity.getCc().getTelegram().getLocationMessage().getPosition().getLongitude());
-        dbObject.put("latitude", entity.getCc().getTelegram().getLocationMessage().getPosition().getLatitude());
-        dbObject.put("offRoute", entity.getCc().getTelegram().getLocationMessage().getPosition().getOffRoute());
-        dbObject.put("velocity", entity.getCc().getTelegram().getLocationMessage().getPosition().getVelocity());
-        dbObject.put("heading", entity.getCc().getTelegram().getLocationMessage().getPosition().getHeading());
-        dbObject.put("driverNumber", entity.getCc().getTelegram().getLocationMessage().getDriverNumber());
-        dbObject.put("blockNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getBlockNo());
-        dbObject.put("lineNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getLineNo());
-        dbObject.put("tripNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getTripNo());
-        dbObject.put("routeNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getRouteNo());
-        dbObject.put("deviation", entity.getCc().getTelegram().getLocationMessage().getTrip().getDeviation());
-        dbObject.put("loadDegree", entity.getCc().getTelegram().getLocationMessage().getTrip().getLoadDegree());
-        dbObject.put("destinationNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getDestinationNo());
-        dbObject.put("tripType", entity.getCc().getTelegram().getLocationMessage().getTrip().getTripType());
-
-        //insert document into collection
-        if (dbAccessIvuLct.getCollection() != null) {
-            insert(dbObject, dbAccessIvuLct, "senderId");
-        } else {
-            LOG.error("collection unavailable: " + COLLECTION_NAME_MSG_IVU_LCT);
-        }
-    }
-
     private static void insert(BasicDBObject dbObject, MongoDbAccess dbAccess, String key) {
         String value = dbObject.getString(key);
 
@@ -133,9 +88,55 @@ class MongoDbServiceImpl implements MongoDbService {
     }
 
     @Override
+    public void insertMsgIvuLct(Entity entity) {
+
+        //create document
+        BasicDBObject dbObject = new BasicDBObject();
+        dbObject.put("date", entity.getDate());
+        dbObject.put("time", entity.getTime());
+        dbObject.put("logLevel", entity.getLogLevel());
+        dbObject.put("addressPartA", entity.getAddressPartA());
+        dbObject.put("addressPartB", entity.getAddressPartB());
+        dbObject.put("peer", entity.getPeer());
+        dbObject.put("addressNext", entity.getAddressNext());
+        dbObject.put("direction", entity.getDirection());
+        dbObject.put("senderType", entity.getCc().getHeader().getSender().getType());
+        dbObject.put("senderId", entity.getCc().getHeader().getSender().getId());
+        dbObject.put("receiverType", entity.getCc().getHeader().getReceiver().getType());
+        dbObject.put("receiverId", entity.getCc().getHeader().getReceiver().getId());
+        dbObject.put("teleType", entity.getCc().getTelegram().getTeleHeader().getTeleType());
+        dbObject.put("teleVersion", entity.getCc().getTelegram().getTeleHeader().getTeleVersion());
+        dbObject.put("teleId", entity.getCc().getTelegram().getTeleHeader().getTeleId());
+        dbObject.put("netPoint", entity.getCc().getTelegram().getLocationMessage().getPosition().getNetPoint());
+        dbObject.put("relPosition", entity.getCc().getTelegram().getLocationMessage().getPosition().getRelPosition());
+        dbObject.put("longitude", entity.getCc().getTelegram().getLocationMessage().getPosition().getLongitude());
+        dbObject.put("latitude", entity.getCc().getTelegram().getLocationMessage().getPosition().getLatitude());
+        dbObject.put("offRoute", entity.getCc().getTelegram().getLocationMessage().getPosition().getOffRoute());
+        dbObject.put("velocity", entity.getCc().getTelegram().getLocationMessage().getPosition().getVelocity());
+        dbObject.put("heading", entity.getCc().getTelegram().getLocationMessage().getPosition().getHeading());
+        dbObject.put("driverNumber", entity.getCc().getTelegram().getLocationMessage().getDriverNumber());
+        dbObject.put("blockNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getBlockNo());
+        dbObject.put("lineNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getLineNo());
+        dbObject.put("tripNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getTripNo());
+        dbObject.put("routeNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getRouteNo());
+        dbObject.put("deviation", entity.getCc().getTelegram().getLocationMessage().getTrip().getDeviation());
+        dbObject.put("loadDegree", entity.getCc().getTelegram().getLocationMessage().getTrip().getLoadDegree());
+        dbObject.put("destinationNo", entity.getCc().getTelegram().getLocationMessage().getTrip().getDestinationNo());
+        dbObject.put("tripType", entity.getCc().getTelegram().getLocationMessage().getTrip().getTripType());
+
+        //insert document into collection
+        if (dbAccessIvuLct.getCollection() != null) {
+            insert(dbObject, dbAccessIvuLct, "senderId");
+        } else {
+            LOG.error("collection unavailable: " + COLLECTION_NAME_MSG_IVU_LCT);
+        }
+    }
+
+    @Override
     public void insertMsgDedeObu(Entity entity) {
 
         //TODO create Validator class
+
         //validate id
         String id = entity.getCc().getHeader().getSender().getId();
         if (!isValidId(id)) {
@@ -164,14 +165,44 @@ class MongoDbServiceImpl implements MongoDbService {
             return;
         }
 
+        //validate alias
+        String alias = entity.getCc().getHeader().getSender().getId();
+        if (!isValidString(alias)) {
+            LOG.info("alias is NOT valid");
+            return;
+        }
+
+        //validate tripId
+        String tripId = entity.getCc().getTelegram().getLocationMessage().getTrip().getTripNo();
+        if (!isValidString(tripId)) {
+            LOG.info("tripId is NOT valid");
+            return;
+        }
+
+        //validate routeId
+        String routeId = entity.getCc().getTelegram().getLocationMessage().getTrip().getRouteNo();
+        if (!isValidString(routeId)) {
+            LOG.info("routeId is NOT valid");
+            return;
+        }
+
+        //validate label
+        String label = entity.getCc().getTelegram().getLocationMessage().getDriverNumber();
+        if (!isValidString(label)) {
+            LOG.info("label is NOT valid");
+            return;
+        }
+
         //create document
         BasicDBObject dbObject = new BasicDBObject();
         dbObject.put("uuid", id);
         dbObject.put("lat", lat);
         dbObject.put("lon", lon);
         dbObject.put("ts", ts);
-        dbObject.put("alias", "alias");
-        dbObject.put("vehicle", "0");
+        dbObject.put("alias", alias);
+        dbObject.put("tripId", tripId);
+        dbObject.put("routeId", routeId);
+        dbObject.put("label", label);
 
         //insert document into collection
         if (dbAccessDedeObu.getCollection() != null) {

@@ -58,6 +58,22 @@ public class MsgDedeObu {
     }
 
     /**
+     * validate String
+     *
+     * @param string String to be validated
+     * @return true if valid; false otherwise
+     */
+    public static boolean isValidString(String string) {
+        if (string != null) {
+            if (string.length() > ID_MIN) {
+                return true;
+            }
+        }
+        LOG.info("string: " + string + " is invalid");
+        return false;
+    }
+
+    /**
      * validate identifier
      *
      * @param id identifier to be validated
