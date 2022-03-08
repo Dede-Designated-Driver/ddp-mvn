@@ -1,5 +1,6 @@
 package org.dedriver.model;
 
+import org.dedriver.utils.MsgValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +17,7 @@ public class MsgDedeObu {
     public final static int LON_MIN = -180;
     public final static int LON_MAX = 180;
     public final static int LON_INVALID = -181;
-    public final static int TS_MIN = 0;
     private final static Logger LOG = LoggerFactory.getLogger(MsgDedeObu.class);
-    private final static int TS_INVALID = -1;
 
     private final String id;
     private final String lat;
@@ -48,8 +47,8 @@ public class MsgDedeObu {
         this.lon = lon;
 
         //validate ts
-        if (!isValidTs(ts)) {
-            throw new IllegalArgumentException("ts value must be greater than " + TS_MIN);
+        if (!MsgValidation.isValidTs(ts)) {
+            throw new IllegalArgumentException("ts value must be greater than " + MsgValidation.TS_MIN);
         }
         this.ts = ts;
 
@@ -136,31 +135,6 @@ public class MsgDedeObu {
             return true;
         }
         LOG.info("lat: " + lat + " is invalid");
-        return false;
-    }
-
-    /**
-     * validate timestamp
-     *
-     * @param ts timestamp to be validated
-     * @return true if valid; false otherwise
-     */
-    public static boolean isValidTs(String ts) {
-
-        boolean tsIsNumeric = isNumeric(ts);
-        long tsLong = TS_INVALID;
-        if (tsIsNumeric) {
-            try {
-                tsLong = Long.parseLong(ts);
-            } catch (NumberFormatException e) {
-                LOG.info("parsing failed, message: " + e.getMessage() + ", trace: " + Arrays.toString(e.getStackTrace()));
-                return false;
-            }
-        }
-        if (tsLong >= TS_MIN) {
-            return true;
-        }
-        LOG.info("ts: " + ts + " is invalid");
         return false;
     }
 

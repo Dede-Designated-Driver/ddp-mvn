@@ -4,6 +4,7 @@ import com.mongodb.BasicDBObject;
 import de.swingbe.ifleet.model.Entity;
 import org.bson.Document;
 import org.dedriver.utils.MongoDbAccess;
+import org.dedriver.utils.MsgValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +55,7 @@ class MongoDbServiceImpl implements MongoDbService {
         }
     }
 
-    private static String getTs(Entity entity) {
+    private static String getTimeUnix(Entity entity) {
         //Instantiating the SimpleDateFormat class
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss,SSS");
 
@@ -68,8 +69,8 @@ class MongoDbServiceImpl implements MongoDbService {
         }
 
         //build Epoch time
-        long epoch = date.getTime();
-        String ts = Long.toString(epoch);
+        long timeUnix = date.getTime();
+        String ts = Long.toString(timeUnix);
         return ts;
     }
 
@@ -90,10 +91,21 @@ class MongoDbServiceImpl implements MongoDbService {
     @Override
     public void insertMsgIvuLct(Entity entity) {
 
+        //TODO Is data validation required?
+
+        //validate timeUnix
+        String timeUnix = getTimeUnix(entity);
+        if (!MsgValidation.isValidTs(timeUnix)) {
+            LOG.info("timeUnix value must be greater than " + MsgValidation.TS_MIN);
+            return;
+        }
+
+
         //create document
         BasicDBObject dbObject = new BasicDBObject();
         dbObject.put("date", entity.getDate());
         dbObject.put("time", entity.getTime());
+        dbObject.put("timeUnix", timeUnix);
         dbObject.put("logLevel", entity.getLogLevel());
         dbObject.put("addressPartA", entity.getAddressPartA());
         dbObject.put("addressPartB", entity.getAddressPartB());
@@ -159,9 +171,9 @@ class MongoDbServiceImpl implements MongoDbService {
         }
 
         //validate ts
-        String ts = getTs(entity);
-        if (!isValidTs(ts)) {
-            LOG.info("ts value must be greater than " + TS_MIN);
+        String ts = getTimeUnix(entity);
+        if (!MsgValidation.isValidTs(ts)) {
+            LOG.info("ts value must be greater than " + MsgValidation.TS_MIN);
             return;
         }
 
