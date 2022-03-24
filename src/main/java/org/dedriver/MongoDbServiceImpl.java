@@ -179,30 +179,26 @@ class MongoDbServiceImpl implements MongoDbService {
 
         //validate alias
         String alias = entity.getCc().getHeader().getSender().getId();
-        if (!isValidString(alias)) {
-            LOG.info("alias is NOT valid");
-            return;
+        if (alias == null) {
+            alias = "";
         }
 
         //validate tripId
         String tripId = entity.getCc().getTelegram().getLocationMessage().getTrip().getTripNo();
-        if (!isValidString(tripId)) {
-            LOG.info("tripId is NOT valid");
-            return;
+        if (tripId == null) {
+            tripId = "";
         }
 
-        //validate routeId
-        String routeId = entity.getCc().getTelegram().getLocationMessage().getTrip().getRouteNo();
-        if (!isValidString(routeId)) {
-            LOG.info("routeId is NOT valid");
-            return;
+        //validate lineNo
+        String lineNo = entity.getCc().getTelegram().getLocationMessage().getTrip().getLineNo();
+        if (lineNo == null) {
+            lineNo = "";
         }
 
         //validate label
         String label = entity.getCc().getTelegram().getLocationMessage().getDriverNumber();
-        if (!isValidString(label)) {
-            LOG.info("label is NOT valid");
-            return;
+        if (label == null) {
+            label = "";
         }
 
         //create document
@@ -213,7 +209,7 @@ class MongoDbServiceImpl implements MongoDbService {
         dbObject.put("ts", ts);
         dbObject.put("alias", alias);
         dbObject.put("tripId", tripId);
-        dbObject.put("routeId", routeId);
+        dbObject.put("lineNo", lineNo);
         dbObject.put("label", label);
 
         //insert document into collection
